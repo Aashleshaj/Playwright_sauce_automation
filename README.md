@@ -21,6 +21,7 @@ HTML test reporting
 
 Test fixtures and browser setup configuration
 
+```
 Project Structure
 Playwright_sauce_automation/
 ├── pages/                # Page objects
@@ -30,6 +31,9 @@ Playwright_sauce_automation/
 ├── pytest.ini            # Pytest configuration
 ├── .gitignore            # Ignored files for Git
 └── README.md             # Project documentation
+```
 
 Command to run
+```
 pytest .\tests\login_sauce.py
+```
