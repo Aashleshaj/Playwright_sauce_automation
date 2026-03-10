@@ -33,3 +33,6 @@ Playwright_sauce_automation/
 
 Command to run
 pytest .\tests\login_sauce.py
+
+To save report in report folder while running file
+pytest --html=reports/report.html .\tests\login_sauce.py
