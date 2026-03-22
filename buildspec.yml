@@ -17,6 +17,6 @@ phases:
       - echo `pwd`
       - pytest --html=reports/report.html ./tests/login_sauce.py
   artifacts:
-  files:
-    - reports/report.html
-  name: Playwright-Test-Report
+    files:
+      - reports/report.html
+    name: Playwright-Test-Report
