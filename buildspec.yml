@@ -15,6 +15,7 @@ phases:
       - echo "inside build commands and printing all environment variables below"
       - printenv
       - echo `pwd`
+      - pip install -r requirements.txt
       - pytest --html=reports/report.html ./tests/login_sauce.py
   post_build:
     files:
