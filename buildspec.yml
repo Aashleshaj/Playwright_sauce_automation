@@ -16,6 +16,7 @@ phases:
       - printenv
       - echo `pwd`
       - pip install -r requirements.txt
+      - playwright install --with-deps chromium
       - pytest --html=reports/report.html ./tests/login_sauce.py
   post_build:
     files:
