@@ -1,10 +1,7 @@
 version: 0.2
-
 env:
   variables:
-    # SDLC_ENVIRONMENT: "$1"
     DOCKER_IMAGE_NAME: "playwright_automation:1.0"
-    # GIT_REPO: "https://github.com/Aashleshaj/Playwright_sauce_automation.git"
 phases:
   install:
     commands:
@@ -12,19 +9,14 @@ phases:
   pre_build:
     commands:
       - echo "This is Codecommit Repo URL - $CODEBUILD_SOURCE_REPO_URL"
-      - |
-        REPO_NAME=$(echo "$CODEBUILD_SOURCE_REPO_URL" | awk -F "/" '{print $NF}')
-        BRANCH_NAME=$(echo "$CODEBUILD_SOURCE_VERSION" | awk -F "/" '{print $NF}')
-        echo "BRANCH_NAME is : $BRANCH_NAME"
-        echo "CODEBUILD_SOURCE_REPO_URL is : $CODEBUILD_SOURCE_REPO_URL"
-        echo "CODEBUILD_SOURCE_VERSION is : $CODEBUILD_SOURCE_VERSION"
-      - echo "This is Codecommit Repo Name - $REPO_NAME"
-      - echo "This is the CODEBUILD_SRC_DIR - $CODEBUILD_SRC_DIR"
-      - echo "This is the commit id from Source Control - $CODEBUILD_RESOLVED_SOURCE_VERSION"
+      - echo "Ready to run Tests"
   build:
     commands:
       - echo "inside build commands and printing all environment variables below"
       - printenv
       - echo `pwd`
-      # - bash $CODEBUILD_SRC_DIR/scripts/build_and_push.sh $DOCKER_IMAGE_NAME
       - pytest --html=reports/report.html ./tests/login_sauce.py
+  artifacts:
+  files:
+    - reports/report.html
+  name: Playwright-Test-Report
