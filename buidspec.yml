@@ -3,7 +3,7 @@ version: 0.2
 env:
   variables:
     # SDLC_ENVIRONMENT: "$1"
-    DOCKER_IMAGE_NAME: "playwright_sauce_automation:1.0"
+    DOCKER_IMAGE_NAME: "playwright_automation:1.0"
     # GIT_REPO: "https://github.com/Aashleshaj/Playwright_sauce_automation.git"
 phases:
   install:

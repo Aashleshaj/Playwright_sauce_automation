@@ -23,4 +23,4 @@ COPY ./requirements.txt   $MICRO_SERVICE
 RUN pip install -r requirements.txt
 EXPOSE 8080
 
-CMD pytest --html=reports/report.html .\tests\login_sauce.py
+CMD pytest --html=reports/report.html ./tests/login_sauce.py
