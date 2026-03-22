@@ -16,7 +16,7 @@ phases:
       - printenv
       - echo `pwd`
       - pytest --html=reports/report.html ./tests/login_sauce.py
-  artifacts:
+  post_build:
     files:
       - reports/report.html
     name: Playwright-Test-Report
