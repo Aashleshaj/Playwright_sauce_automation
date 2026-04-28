@@ -3,8 +3,7 @@ from playwright.sync_api import Page
 from pages.login_sauce_page import LoginPage
 from pages.buy_product_page import HomePage 
 
-
-
+# test example definition
 def test_example(page: Page) -> None:
     login_page = LoginPage(page)
     home_page = HomePage(page)
