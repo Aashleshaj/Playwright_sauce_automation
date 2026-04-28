@@ -1,0 +1,47 @@
+name: Playwright Tests
+
+on:
+  push:
+    branches: [ main, master ]
+
+env:
+  DOCKER_IMAGE_NAME: "playwright_automation:1.0"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10' # Adjust based on your project requirements
+          cache: 'pip'
+
+      - name: Pre-build Debugging
+        run: |
+          echo "This is Repo URL - $GITHUB_SERVER_URL/$GITHUB_REPOSITORY"
+          echo "Ready to run Tests"
+
+      - name: Setup Environment & Dependencies
+        run: |
+          echo "inside build commands and printing all environment variables below"
+          printenv
+          echo $(pwd)
+          pip install -r requirements.txt
+          # Installs chromium and system-level dependencies
+          playwright install --with-deps chromium
+
+      - name: Run Playwright Tests
+        run: |
+          pytest --html=reports/report.html ./tests/login_sauce.py
+
+      - name: Upload Test Report
+        if: always() # Ensures report is uploaded even if tests fail
+        uses: actions/upload-artifact@v4
+        with:
+          name: Playwright-Test-Report
+          path: reports/report.html
