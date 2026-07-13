@@ -3,6 +3,8 @@ name: Playwright Tests
 on:
   push:
     branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
 
 env:
   DOCKER_IMAGE_NAME: "playwright_automation:1.0"
@@ -40,8 +42,8 @@ jobs:
           pytest --html=reports/report.html ./tests/login_sauce.py
 
       - name: Upload Test Report
-        if: always() # Ensures report is uploaded even if tests fail
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4  
+        if: always() 
         with:
           name: Playwright-Test-Report
           path: reports/report.html
