@@ -40,8 +40,14 @@ jobs:
           pytest --html=reports/report.html ./tests/login_sauce.py
 
       - name: Upload Test Report
-        if: always() # Ensures report is uploaded even if tests fail
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4  
+        if: always() 
         with:
           name: Playwright-Test-Report
           path: reports/report.html
+
+      - name: Download Playwright Test Report
+        uses: actions/download-artifact@v4
+        with:
+          name: Playwright-Test-Report
+          path: reports/generated_output.html # The folder where it will be saved
