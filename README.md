@@ -38,3 +38,17 @@ pytest .\tests\login_sauce.py
 
 To save report in report folder while running file
 pytest --html=reports/report.html .\tests\login_sauce.py
+
+Installing Playwright-MCP in VScode
+- **Install node JS** Download in your system([[Download NODE JS](https://nodejs.org/en/download)])
+- **To add the Playwright server:** 
+```
+npx @google/gemini-cli mcp add playwright npx -y @playwright/mcp@latest
+```
+- Add API key of Gemini in Agent to able to gemini models instead of claude (paid model)
+- Use below command to get All 3 agents in your folder(Planner, Generator, Healer)
+```
+npx playwright init-agents --loop=vscode
+```
+
+[Reference document for playwright MCP](https://www.shapemyinterview.com/resources/playwright-mcp-ai-agents-guide)
