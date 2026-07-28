@@ -6,12 +6,19 @@ on:
   pull_request:
     branches: [ main, master ]
 
-env:
-  DOCKER_IMAGE_NAME: "playwright_automation:1.0"
+# Cancels outdated runs if you push new code quickly
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    # matrix strategy to test multiple browsers concurrently
+    strategy:
+      fail-fast: false # Prevents GitHub from cancelling all jobs if just one browser fails
+      matrix:
+        browser: [chromium, firefox] 
 
     steps:
       - name: Checkout Repository
@@ -20,30 +27,40 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10' # Adjust based on your project requirements
-          cache: 'pip'
+          python-version: '3.10'
+          cache: 'pip' # Caches your Python dependencies
 
-      - name: Pre-build Debugging
-        run: |
-          echo "This is Repo URL - $GITHUB_SERVER_URL/$GITHUB_REPOSITORY"
-          echo "Ready to run Tests"
+      - name: Install dependencies
+        run: pip install -r requirements.txt
 
-      - name: Setup Environment & Dependencies
-        run: |
-          echo "inside build commands and printing all environment variables below"
-          printenv
-          echo $(pwd)
-          pip install -r requirements.txt
-          # Installs chromium and system-level dependencies
-          playwright install --with-deps chromium
+      # Cache the Playwright browser binaries
+      - name: Cache Playwright Browsers
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          # Add the matrix browser variable to isolate the caches
+          key: ${{ runner.os }}-playwright-${{ matrix.browser }}-${{ hashFiles('requirements.txt') }}
 
+      # Only install browsers if the cache was missed
+      - name: Install Playwright Browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: playwright install --with-deps
+
+      # Run tests in parallel (-n auto) and capture traces on failure
       - name: Run Playwright Tests
-        run: |
-          pytest --html=reports/report.html ./tests/login_sauce.py
+        run: >
+          pytest -n auto 
+          --browser=${{ matrix.browser }} 
+          --tracing=retain-on-failure 
+          --html=reports/report-${{ matrix.browser }}.html 
+          ./tests/
 
-      - name: Upload Test Report
+      - name: Upload Test Report & Traces
         uses: actions/upload-artifact@v4  
         if: always() 
         with:
-          name: Playwright-Test-Report
-          path: reports/report.html
+          name: Playwright-Report-${{ matrix.browser }}
+          path: |
+            reports/
+            test-results/

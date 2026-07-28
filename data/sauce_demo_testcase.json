@@ -1,0 +1,324 @@
+{
+  "testSuite": "SauceDemo Checkout Flow E2E Test Cases",
+  "application": "SauceDemo",
+  "baseUrl": "https://www.saucedemo.com/",
+  "totalTestCases": 10,
+  "testCases": [
+    {
+      "testCaseId": "TC_CO_001",
+      "title": "Successful End-to-End Checkout Flow with a Single Item (Happy Path)",
+      "description": "Verify that a logged-in user can complete a purchase with one item in the cart from selection to order confirmation.",
+      "preconditions": [
+        "User is logged in as 'standard_user'.",
+        "At least one item is added to the cart."
+      ],
+      "testData": {
+        "username": "standard_user",
+        "password": "secret_sauce",
+        "item": "Sauce Labs Backpack",
+        "firstName": "John",
+        "lastName": "Doe",
+        "postalCode": "12345"
+      },
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "Click on the Shopping Cart icon at the top right.",
+          "expectedResult": "User is navigated to '/cart.html' displaying 'Sauce Labs Backpack' with quantity 1."
+        },
+        {
+          "stepNumber": 2,
+          "action": "Click on the 'Checkout' button.",
+          "expectedResult": "User is navigated to '/checkout-step-one.html' (Your Information page)."
+        },
+        {
+          "stepNumber": 3,
+          "action": "Enter First Name 'John', Last Name 'Doe', and Zip/Postal Code '12345'.",
+          "expectedResult": "Input fields are populated with the provided test data."
+        },
+        {
+          "stepNumber": 4,
+          "action": "Click on the 'Continue' button.",
+          "expectedResult": "User is navigated to '/checkout-step-two.html' (Overview page)."
+        },
+        {
+          "stepNumber": 5,
+          "action": "Review payment info, shipping info, price total, and click 'Finish'.",
+          "expectedResult": "User is navigated to '/checkout-complete.html'."
+        }
+      ],
+      "expectedOutcome": "Header displays 'Thank you for your order!' and shopping cart badge is cleared."
+    },
+    {
+      "testCaseId": "TC_CO_002",
+      "title": "Successful End-to-End Checkout Flow with Multiple Items",
+      "description": "Verify that a user can purchase multiple items simultaneously and order overview reflects all selected items.",
+      "preconditions": [
+        "User is logged in as 'standard_user'."
+      ],
+      "testData": {
+        "items": [
+          "Sauce Labs Backpack ($29.99)",
+          "Sauce Labs Bike Light ($9.99)",
+          "Sauce Labs Bolt T-Shirt ($15.99)"
+        ],
+        "firstName": "Jane",
+        "lastName": "Smith",
+        "postalCode": "90210"
+      },
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "Add 'Sauce Labs Backpack', 'Sauce Labs Bike Light', and 'Sauce Labs Bolt T-Shirt' to the cart.",
+          "expectedResult": "Shopping cart badge shows count '3'."
+        },
+        {
+          "stepNumber": 2,
+          "action": "Click the Shopping Cart icon and click 'Checkout'.",
+          "expectedResult": "Navigated to '/checkout-step-one.html'."
+        },
+        {
+          "stepNumber": 3,
+          "action": "Fill in First Name 'Jane', Last Name 'Smith', Zip '90210' and click 'Continue'.",
+          "expectedResult": "Navigated to Checkout Overview page ('/checkout-step-two.html')."
+        },
+        {
+          "stepNumber": 4,
+          "action": "Verify all 3 items appear in the Overview list with correct prices.",
+          "expectedResult": "All 3 items are displayed with correct individual prices."
+        },
+        {
+          "stepNumber": 5,
+          "action": "Click the 'Finish' button.",
+          "expectedResult": "Order is placed successfully with 'Thank you for your order!' page shown."
+        }
+      ],
+      "expectedOutcome": "Order completed successfully with multiple items."
+    },
+    {
+      "testCaseId": "TC_CO_003",
+      "title": "Checkout Step One Validation - Missing First Name",
+      "description": "Verify validation error when First Name is left blank on the checkout information page.",
+      "preconditions": [
+        "User has items in cart and is on '/checkout-step-one.html'."
+      ],
+      "testData": {
+        "firstName": "",
+        "lastName": "Doe",
+        "postalCode": "12345"
+      },
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "Leave 'First Name' blank.",
+          "expectedResult": "First Name field remains empty."
+        },
+        {
+          "stepNumber": 2,
+          "action": "Enter 'Doe' in 'Last Name' and '12345' in 'Zip/Postal Code'.",
+          "expectedResult": "Last Name and Postal Code fields are populated."
+        },
+        {
+          "stepNumber": 3,
+          "action": "Click the 'Continue' button.",
+          "expectedResult": "Error message container appears."
+        }
+      ],
+      "expectedOutcome": "Error text displays 'Error: First Name is required' and user stays on '/checkout-step-one.html'."
+    },
+    {
+      "testCaseId": "TC_CO_004",
+      "title": "Checkout Step One Validation - Missing Last Name",
+      "description": "Verify validation error when Last Name is left blank on the checkout information page.",
+      "preconditions": [
+        "User has items in cart and is on '/checkout-step-one.html'."
+      ],
+      "testData": {
+        "firstName": "John",
+        "lastName": "",
+        "postalCode": "12345"
+      },
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "Enter 'John' in 'First Name'.",
+          "expectedResult": "First Name field is populated."
+        },
+        {
+          "stepNumber": 2,
+          "action": "Leave 'Last Name' blank.",
+          "expectedResult": "Last Name field remains empty."
+        },
+        {
+          "stepNumber": 3,
+          "action": "Enter '12345' in 'Zip/Postal Code' and click 'Continue'.",
+          "expectedResult": "Error message container appears."
+        }
+      ],
+      "expectedOutcome": "Error text displays 'Error: Last Name is required' and user stays on '/checkout-step-one.html'."
+    },
+    {
+      "testCaseId": "TC_CO_005",
+      "title": "Checkout Step One Validation - Missing Postal Code",
+      "description": "Verify validation error when Zip/Postal Code is left blank on the checkout information page.",
+      "preconditions": [
+        "User has items in cart and is on '/checkout-step-one.html'."
+      ],
+      "testData": {
+        "firstName": "John",
+        "lastName": "Doe",
+        "postalCode": ""
+      },
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "Enter 'John' in 'First Name' and 'Doe' in 'Last Name'.",
+          "expectedResult": "First Name and Last Name fields are populated."
+        },
+        {
+          "stepNumber": 2,
+          "action": "Leave 'Zip/Postal Code' blank.",
+          "expectedResult": "Postal Code field remains empty."
+        },
+        {
+          "stepNumber": 3,
+          "action": "Click 'Continue'.",
+          "expectedResult": "Error message container appears."
+        }
+      ],
+      "expectedOutcome": "Error text displays 'Error: Postal Code is required' and user stays on '/checkout-step-one.html'."
+    },
+    {
+      "testCaseId": "TC_CO_006",
+      "title": "Cancel Checkout from Information Page (Step One)",
+      "description": "Verify clicking 'Cancel' on Checkout Step One redirects user back to the cart page.",
+      "preconditions": [
+        "User has 1 item in cart and is on '/checkout-step-one.html'."
+      ],
+      "testData": {},
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "Click the 'Cancel' button on the Checkout Step One form.",
+          "expectedResult": "User is redirected to '/cart.html'."
+        },
+        {
+          "stepNumber": 2,
+          "action": "Verify cart contents.",
+          "expectedResult": "The previously added item remains in the cart intact."
+        }
+      ],
+      "expectedOutcome": "Checkout cancelled and cart contents preserved on '/cart.html'."
+    },
+    {
+      "testCaseId": "TC_CO_007",
+      "title": "Cancel Checkout from Overview Page (Step Two)",
+      "description": "Verify clicking 'Cancel' on Checkout Overview page returns user to Inventory page without completing order.",
+      "preconditions": [
+        "User completed Step One and is currently on '/checkout-step-two.html'."
+      ],
+      "testData": {},
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "Click the 'Cancel' button at the bottom of the overview page.",
+          "expectedResult": "User is redirected to '/inventory.html'."
+        },
+        {
+          "stepNumber": 2,
+          "action": "Check shopping cart badge.",
+          "expectedResult": "Cart badge retains existing item count."
+        }
+      ],
+      "expectedOutcome": "Order is not completed and user returns safely to product inventory page."
+    },
+    {
+      "testCaseId": "TC_CO_008",
+      "title": "Verify Price Total, Tax, and Calculations on Overview Page",
+      "description": "Verify item total, tax calculation (8%), and total price match sum of items in cart.",
+      "preconditions": [
+        "User added Sauce Labs Backpack ($29.99) and Sauce Labs Bike Light ($9.99)."
+      ],
+      "testData": {
+        "item1Price": 29.99,
+        "item2Price": 9.99,
+        "expectedItemTotal": 39.98,
+        "expectedTax": 3.20,
+        "expectedTotal": 43.18
+      },
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "Proceed through Checkout Step One to Checkout Overview page.",
+          "expectedResult": "Navigated to '/checkout-step-two.html'."
+        },
+        {
+          "stepNumber": 2,
+          "action": "Inspect 'Item total' price label.",
+          "expectedResult": "Displays 'Item total: $39.98'."
+        },
+        {
+          "stepNumber": 3,
+          "action": "Inspect 'Tax' price label.",
+          "expectedResult": "Displays 'Tax: $3.20'."
+        },
+        {
+          "stepNumber": 4,
+          "action": "Inspect 'Total' price label.",
+          "expectedResult": "Displays 'Total: $43.18'."
+        }
+      ],
+      "expectedOutcome": "Item total, tax, and overall total calculations are accurate."
+    },
+    {
+      "testCaseId": "TC_CO_009",
+      "title": "Attempt Checkout with Empty Cart",
+      "description": "Verify system behavior when user navigates to cart with 0 items and attempts checkout.",
+      "preconditions": [
+        "User is logged in.",
+        "Shopping cart is empty (0 items)."
+      ],
+      "testData": {},
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "Click on the Shopping Cart icon.",
+          "expectedResult": "User is navigated to '/cart.html' displaying empty list."
+        },
+        {
+          "stepNumber": 2,
+          "action": "Click on the 'Checkout' button.",
+          "expectedResult": "User is either prevented from proceeding or redirected."
+        }
+      ],
+      "expectedOutcome": "Checkout cannot be placed with empty cart."
+    },
+    {
+      "testCaseId": "TC_CO_010",
+      "title": "Back Home Navigation Post Order Completion and Cart Reset",
+      "description": "Verify clicking 'Back Home' on checkout complete page resets application state and clears cart.",
+      "preconditions": [
+        "Order complete page '/checkout-complete.html' is reached."
+      ],
+      "testData": {},
+      "steps": [
+        {
+          "stepNumber": 1,
+          "action": "Verify completion message 'Thank you for your order!' is displayed.",
+          "expectedResult": "Completion message and pony dispatch text are visible."
+        },
+        {
+          "stepNumber": 2,
+          "action": "Click the 'Back Home' button.",
+          "expectedResult": "User is navigated to '/inventory.html'."
+        },
+        {
+          "stepNumber": 3,
+          "action": "Verify cart icon status.",
+          "expectedResult": "Cart badge is removed / shows 0 items."
+        }
+      ],
+      "expectedOutcome": "User is returned to inventory page and cart state is completely reset."
+    }
+  ]
+}
