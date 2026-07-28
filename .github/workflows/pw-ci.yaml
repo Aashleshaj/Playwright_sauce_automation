@@ -39,7 +39,8 @@ jobs:
         id: playwright-cache
         with:
           path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('requirements.txt') }}
+          # Add the matrix browser variable to isolate the caches
+          key: ${{ runner.os }}-playwright-${{ matrix.browser }}-${{ hashFiles('requirements.txt') }}
 
       # Only install browsers if the cache was missed
       - name: Install Playwright Browsers
