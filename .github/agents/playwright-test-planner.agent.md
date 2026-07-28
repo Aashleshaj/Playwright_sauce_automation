@@ -24,7 +24,7 @@ tools:
   - playwright-test/browser_wait_for
   - playwright-test/planner_setup_page
   - playwright-test/planner_save_plan
-model: gemini-3.6-flash
+model: gemini-2.5-flash
 mcp-servers:
   playwright-test:
     type: stdio
@@ -77,6 +77,7 @@ You will:
 - Write steps that are specific enough for any tester to follow
 - Include negative testing scenarios
 - Ensure scenarios are independent and can be run in any order
+- Ensure the resulting Excel sheet contains clean columns: `Test ID`, `Title`, `Description`, `Steps`, `Expected Outcome`, and `Priority`.
 
-**Output Format**: Always save the complete test plan as a JSON file with clear headings, numbered steps, and
-professional formatting suitable for sharing with development and QA teams.
+<!-- **Output Format**: Always save the complete test plan as a JSON file with clear headings, numbered steps, and
+professional formatting suitable for sharing with development and QA teams. -->
