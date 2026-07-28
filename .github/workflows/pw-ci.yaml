@@ -45,7 +45,7 @@ jobs:
       # Only install browsers if the cache was missed
       - name: Install Playwright Browsers
         if: steps.playwright-cache.outputs.cache-hit != 'true'
-        run: playwright install --with-deps ${{ matrix.browser }}
+        run: playwright install --with-deps
 
       # Run tests in parallel (-n auto) and capture traces on failure
       - name: Run Playwright Tests
