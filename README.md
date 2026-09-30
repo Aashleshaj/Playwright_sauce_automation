@@ -10,9 +10,9 @@ This repository contains an end-to-end automation framework for the SauceDemo e-
 *   Playwright for cross-browser automation
 *   Structured test suite (login, products, cart)
 *   HTML test reporting and trace viewer integration
-*   **GitHub Actions CI/CD** for automated pipeline execution
-*   **Dockerized environment** for scalable and consistent test runs
-*   **MCP AI Agents** (Planner, Generator, Healer) for autonomous test creation and maintenance
+*   GitHub Actions CI/CD for automated pipeline execution
+*   Dockerized environment for scalable and consistent test runs
+*   MCP AI Agents (Planner, Generator, Healer) for autonomous test creation and maintenance
 
 ## 📁 Project Structure
 ```text
