@@ -1,7 +1,7 @@
 # Playwright Sauce Demo Automation
 
 ## 📝 Description
-This repository contains an end-to-end automation framework for the SauceDemo e-commerce web application (https://www.saucedemo.com). The tests are written in Python using Pytest and Playwright, and they validate core user workflows such as login, inventory interaction, cart actions, and checkout validations. The project demonstrates a scalable test architecture using the Page Object Model (POM) and includes reporting, CI/CD, containerization, and AI-agent configuration support.
+This repository contains an end-to-end automation framework for the SauceDemo e-commerce web application (https://www.saucedemo.com). The tests are written in Python using Pytest and Playwright, and they validate core user workflows such as login, inventory interaction, cart actions, and checkout validations. The project demonstrates a scalable test architecture using the Page Object Model (POM) and includes reporting, CI/CD, containerization and AI-agent configuration support using playwright-MCP.
 
 ## ✨ Project Features
 *   End-to-end UI automation tests for SauceDemo
